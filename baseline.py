@@ -30,10 +30,10 @@ print(
     f"\033[32mLogistic Regression -> Accuracy: {acc_lr:.3f}, F1: {f1_lr:.3f}, ROC-AUC: {auc_lr:.3f}\033[32m"
 )
 
-acc_rf, f1_rf, auc_rf = evaluate_baseline(rf_model, X_train, y_train, X_test, y_test)
-print(
-    f"\033[32mRandom Forest       -> Accuracy: {acc_rf:.3f}, F1: {f1_rf:.3f}, ROC-AUC: {auc_rf:.3f}\033[32m"
-)
+# acc_rf, f1_rf, auc_rf = evaluate_baseline(rf_model, X_train, y_train, X_test, y_test)
+# print(
+#     f"\033[32mRandom Forest       -> Accuracy: {acc_rf:.3f}, F1: {f1_rf:.3f}, ROC-AUC: {auc_rf:.3f}\033[32m"
+# )
 
 
 def get_fitness_score(selected_features_mask):
@@ -42,7 +42,24 @@ def get_fitness_score(selected_features_mask):
     """
     X_subset = X.iloc[:, selected_features_mask]
 
+    # для вектору з нулів
+    if X_subset.shape[1] == 0:
+        return 0
+
+    # Можливо, алгоритм буде дуже довго працювати саме за рахунок RandomForest,
+    # можливо, варто спробувати Лінійну регресію або інший алгоритм,
+    # якщо з RandomForest буде довго виконуватись
     model = RandomForestClassifier(n_estimators=50, random_state=42)
     scores = cross_val_score(model, X_subset, y, cv=3, scoring="f1")
 
-    return scores.mean()
+    # штраф, якщо беремо багато ознак, число 0.1 є магічним, можливо варто буде змінити
+    # (перевірити експерементально) та встановити найкраще значення
+    penalty = sum(selected_features_mask) / len(selected_features_mask)
+
+    # не впевнений стосовно штрафу, поки закоменчений
+    return scores.mean()  # - 0.1 * penalty
+
+
+# mask = [False, True, True, True, True, True, True, True, True, False, True, True, True]
+# print(mask)
+# print("w mask", get_fitness_score(mask))
