@@ -5,8 +5,8 @@ dataset preparing and unpacking
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-FILENAME = "datasets/heart.csv"
-# FILENAME = "datasets/diabetes.csv"
+#FILENAME = "datasets/heart.csv"
+FILENAME = "datasets/diabetes.csv"
 
 
 df = pd.read_csv(FILENAME)

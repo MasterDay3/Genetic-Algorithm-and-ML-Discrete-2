@@ -2,26 +2,33 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from dataset import X_train, X_test, y_train, y_test
 from baseline import evaluate_baseline
+from baseline import fitness_function
+
 from genetic_algorithm import (
     initialize_population,
-    fitness_function,
     tournament_selection,
     crossover,
     mutation
 )
 
-        
+#  два ключових параметри, підбирати супер акуратно і малнькими кроками
+N_GENERATION = 100
+PENALTY = 0.05
+
+
+
+
 def genetic_algorithm(
     X_train,
     y_train,
     feature_names,
     model=None,
     population_size: int = 30,
-    n_generations: int = 40,
+   # N_GENERATION: int = 40,
     crossover_rate: float = 0.8,
-    mutation_rate: float = 0.02,
+    mutation_rate: float = 0.05,
     tournament_k: int = 3,
-    penalty: float = 0.01,
+   # PENALTY: float = 0.01,
     cv: int = 5,
     scoring: str = "roc_auc",
     verbose: bool = True,
@@ -40,9 +47,9 @@ def genetic_algorithm(
     best_fitness = -np.inf
     history = []
 
-    for gen in range(n_generations):
+    for gen in range(N_GENERATION):
         fitness_scores = np.array([
-            fitness_function(ch, X_np, y_np, model, penalty, cv, scoring)
+            fitness_function(ch, X_np, y_np, model, PENALTY, cv, scoring)
             for ch in population
         ])
 
@@ -52,12 +59,15 @@ def genetic_algorithm(
             best_fitness = fitness_scores[gen_best_idx]
             best_chromosome = population[gen_best_idx].copy()
         n_selected = int(best_chromosome.sum())
+        if (gen+1) % 2 == 0:
+            color = '\033[31m'
+        else: color = '\033[32m'
         if verbose:
             print(
-                f"Gen {gen+1:>3}/{n_generations} | "
+                f"{color}Gen {gen+1:>3}/{N_GENERATION} | "
                 f"best_fitness={best_fitness:.4f} | "
                 f"avg_fitness={fitness_scores.mean():.4f} | "
-                f"features={n_selected}/{n_features}"
+                f"features={n_selected}/{n_features}{color}"
             )
 
         new_population = [best_chromosome.copy()]
@@ -82,6 +92,11 @@ def genetic_algorithm(
 
 
 if __name__ == "__main__":
+
+    base_model = LogisticRegression(max_iter=1000, random_state=42)
+    acc_base, f1_base, auc_base = evaluate_baseline(
+    base_model, X_train, y_train, X_test, y_test
+    )
     model = LogisticRegression(max_iter=1000, random_state=42)
     best_chromosome, selected_features, history = genetic_algorithm(
         X_train,
@@ -100,5 +115,14 @@ if __name__ == "__main__":
         X_test[selected_features],
         y_test
     )
-
     print(f"GA Model -> Accuracy: {acc:.3f}, F1: {f1:.3f}, ROC-AUC: {auc:.3f}")
+    print("\n" + "="*50)
+    print("RESULTS")
+    print("="*50)
+    print(f"Features: {len(X_train.columns)} → {len(selected_features)}")
+    print(f"Selected: {selected_features}")
+    print(f"\nBaseline (all features):")
+    print(f"  Accuracy: {acc_base:.3f} | F1: {f1_base:.3f} | ROC-AUC: {auc_base:.3f}")
+    print(f"\nGA Model ({len(selected_features)} features):")
+    print(f"  Accuracy: {acc:.3f} | F1: {f1:.3f} | ROC-AUC: {auc:.3f}")
+    print("="*50)

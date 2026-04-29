@@ -3,9 +3,7 @@ Genetic Algorithm for Feature Selection
 """
 
 import numpy as np
-import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score, train_test_split
+from baseline import fitness_function
 
 def initialize_population(population_size: int, n_features: int) -> np.ndarray:
     """
@@ -20,36 +18,7 @@ def initialize_population(population_size: int, n_features: int) -> np.ndarray:
 
     return population
 
-def fitness_function(
-    chromosome: np.ndarray,
-    X_train: np.ndarray,
-    y_train: np.ndarray,
-    model,
-    penalty: float = 0.01,
-    cv: int = 5,
-    scoring: str = "roc_auc",
-) -> float:
-    """
-    Calculates the fitness score for a given set of features (chromosome).
-    """
-    X_train = X_train.values if hasattr(X_train, 'values') else X_train
-    y_train = y_train.values if hasattr(y_train, 'values') else y_train
 
-    selected_indices = np.where(chromosome == 1)[0]
-
-    if len(selected_indices) == 0:
-        return 0.0
-
-    X_subset = X_train[:, selected_indices]
-
-    scores = cross_val_score(model, X_subset, y_train, cv=cv, scoring=scoring)
-    mean_score = scores.mean()
-
-    feature_ratio = len(selected_indices) / len(chromosome)
-
-    fitness = mean_score - penalty * feature_ratio
-
-    return fitness
 
 def tournament_selection(
     population: np.ndarray,
