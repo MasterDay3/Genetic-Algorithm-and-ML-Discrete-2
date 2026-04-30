@@ -13,7 +13,7 @@ from genetic_algorithm import (
 
 #  два ключових параметри, підбирати супер акуратно і малнькими кроками
 N_GENERATION = 100
-PENALTY = 0.05
+PENALTY = 0.1
 
 
 
