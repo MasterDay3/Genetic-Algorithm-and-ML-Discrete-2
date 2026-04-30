@@ -1,9 +1,8 @@
 """
 Genetic Algorithm for Feature Selection
 """
-
 import numpy as np
-from baseline import fitness_function
+
 
 def initialize_population(population_size: int, n_features: int) -> np.ndarray:
     """

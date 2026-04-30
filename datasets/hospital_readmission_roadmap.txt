@@ -1,0 +1,27 @@
+About Dataset
+Hospital Patient Readmission Dataset
+Synthetic dataset simulating hospital patient records to predict 
+30-day readmission risk using clinical and demographic features.
+
+Dataset Info
+Date range: 2021–2023
+Readmission rate: ~55%
+patient_id:	Unique patient identifier
+admission_date:	Hospital admission date
+season: Winter / Spring / Summer / Fall
+age: Patient age (18–95)
+gender: Male / Female
+region: North / South / East / West / Central
+primary_diagnosis: 11 diagnosis types
+comorbidities_count: Number of additional conditions (0–10)
+length_of_stay: Days in hospital (1–30)
+treatment_type: Medical / Surgical / Interventional / Conservative
+medications_count: Number of prescribed medications
+followup_visits_last_year: Outpatient visits in past year
+prev_readmissions: Previous hospital readmissions
+insurance_type: Private / Medicare / Medicaid / Uninsured
+discharge_disposition: Home / Home Health / Skilled Nursing / Rehab
+label	Binary	0 = No readmission, 1 = Readmitted within 30 
+etc..
+
+link - https://www.kaggle.com/datasets/mohamedasak/hospital-patient-readmission-dataset
