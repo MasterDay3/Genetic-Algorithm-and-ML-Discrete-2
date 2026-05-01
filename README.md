@@ -5,7 +5,7 @@ A Python implementation of a Genetic Algorithm (GA) for automated feature select
 ## Authors
 First-year Computer Science students, Applied Sciences Faculty, Ukrainian Catholic University (UCU)
 
-- **Mykola Zabulskyi**
+- **Zabulskyi Mykola**
 - **Pelyno Mykhailo**
 - **Yatsko Alina**
 - **Havronska Sofia**
