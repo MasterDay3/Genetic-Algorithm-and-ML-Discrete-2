@@ -1,6 +1,7 @@
 """
 Genetic Algorithm for Feature Selection
 """
+
 import numpy as np
 
 
@@ -18,7 +19,6 @@ def initialize_population(population_size: int, n_features: int) -> np.ndarray:
     return population
 
 
-
 def tournament_selection(
     population: np.ndarray,
     fitness_scores: np.ndarray,
@@ -31,6 +31,7 @@ def tournament_selection(
     candidates_idx = np.random.choice(pop_size, size=k, replace=False)
     best_idx = candidates_idx[np.argmax(fitness_scores[candidates_idx])]
     return population[best_idx].copy()
+
 
 def crossover(
     parent1: np.ndarray,
@@ -51,6 +52,7 @@ def crossover(
     child2 = np.concatenate([parent2[:point], parent1[point:]])
 
     return child1, child2
+
 
 def mutation(chromosome: np.ndarray, mutation_rate: float = 0.02) -> np.ndarray:
     """

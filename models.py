@@ -29,18 +29,6 @@ def evaluate_baseline(model, X_tr, y_tr, X_te, y_te):
 
 
 log_reg = DEFAULT_MODEL
-# rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-# print(f"\033[32mStats for {FILENAME}\033[32m")
-
-# acc_lr, f1_lr, auc_lr = evaluate_baseline(log_reg, X_train, y_train, X_test, y_test)
-# print(
-#     f"\033[32mLogistic Regression -> Accuracy: {acc_lr:.3f}, F1: {f1_lr:.3f}, ROC-AUC: {auc_lr:.3f}\033[32m"
-# )
-
-# acc_rf, f1_rf, auc_rf = evaluate_baseline(rf_model, X_train, y_train, X_test, y_test)
-# print(
-#     f"\033[32mRandom Forest       -> Accuracy: {acc_rf:.3f}, F1: {f1_rf:.3f}, ROC-AUC: {auc_rf:.3f}\033[32m"
-# )
 
 
 def fitness_function(
@@ -62,32 +50,3 @@ def fitness_function(
     feature_ratio = len(selected_indices) / len(chromosome)
 
     return scores.mean() - penalty * feature_ratio
-
-
-# def get_fitness_score(selected_features_mask):
-#     """
-#     selected_features_mask: список або масив булевих значень (True/False) для кожної фічі
-#     """
-#     X_subset = X.iloc[:, selected_features_mask]
-
-#     # для вектору з нулів
-#     if X_subset.shape[1] == 0:
-#         return 0
-
-#     # Можливо, алгоритм буде дуже довго працювати саме за рахунок RandomForest,
-#     # можливо, варто спробувати Лінійну регресію або інший алгоритм,
-#     # якщо з RandomForest буде довго виконуватись
-#     model = RandomForestClassifier(n_estimators=50, random_state=42)
-#     scores = cross_val_score(model, X_subset, y, cv=3, scoring="f1")
-
-#     # штраф, якщо беремо багато ознак, число 0.1 є магічним, можливо варто буде змінити
-#     # (перевірити експерементально) та встановити найкраще значення
-#     penalty = sum(selected_features_mask) / len(selected_features_mask)
-
-#     # не впевнений стосовно штрафу, поки закоменчений
-#     return scores.mean()  - 0.05 * penalty
-
-
-# mask = [False, True, True, True, True, True, True, True, True, False, True, True, True]
-# print(mask)
-# print("w mask", get_fitness_score(mask))
