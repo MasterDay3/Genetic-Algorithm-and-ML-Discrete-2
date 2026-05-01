@@ -3,29 +3,33 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.model_selection import cross_val_score
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 
 DEFAULT_SCORING = "roc_auc"
-DEFAULT_MODEL = LogisticRegression(
-    max_iter=8000,
-    random_state=42,
-    solver='saga',
-)
+# models.py
+
+DEFAULT_MODEL = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
+# DEFAULT_MODEL = LogisticRegression(
+#     max_iter=8000,
+#     random_state=67,
+#     solver="saga",
+# )
 
 
 def evaluate_baseline(model, X_tr, y_tr, X_te, y_te):
     model.fit(X_tr, y_tr)
     y_pred = model.predict(X_te)
     y_prob = model.predict_proba(X_te)[:, 1]
-    
+
     acc = accuracy_score(y_te, y_pred)
     f1 = f1_score(y_te, y_pred)
     auc = roc_auc_score(y_te, y_prob)
-    
+
     return acc, f1, auc
 
 
 log_reg = DEFAULT_MODEL
-#rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+# rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 # print(f"\033[32mStats for {FILENAME}\033[32m")
 
 # acc_lr, f1_lr, auc_lr = evaluate_baseline(log_reg, X_train, y_train, X_test, y_test)
@@ -37,6 +41,7 @@ log_reg = DEFAULT_MODEL
 # print(
 #     f"\033[32mRandom Forest       -> Accuracy: {acc_rf:.3f}, F1: {f1_rf:.3f}, ROC-AUC: {auc_rf:.3f}\033[32m"
 # )
+
 
 def fitness_function(
     chromosome: np.ndarray,
@@ -57,14 +62,6 @@ def fitness_function(
     feature_ratio = len(selected_indices) / len(chromosome)
 
     return scores.mean() - penalty * feature_ratio
-
-
-
-
-
-
-
-
 
 
 # def get_fitness_score(selected_features_mask):

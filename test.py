@@ -12,6 +12,6 @@ fitness_function(
 )
 elapsed = time.time() - start
 
-total = elapsed * N_GENERATION * 30
+total = elapsed * N_GENERATION * 5  # 5 - розмір популяції з main.py
 print(f"Один fitness: {elapsed:.1f} сек")
 print(f"Приблизний час: {total/60:.0f} хв")

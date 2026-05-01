@@ -10,11 +10,21 @@ from genetic_algorithm import (
     mutation,
 )
 import warnings
+from joblib import Parallel, delayed
+import copy
 
 warnings.filterwarnings("ignore")
 #  два ключових параметри, підбирати супер акуратно і малнькими кроками
-N_GENERATION = 5
-PENALTY = 0.01
+N_GENERATION = 100
+PENALTY = 0.05
+NO_IMPROVE_LIMIT = int(
+    N_GENERATION * 0.4
+)  # ліміт для зупинки алгоритмку у випадку, якщо не покращується метрика,
+# ставити максимально великий, якщо ціль - найкраща метрика
+
+print(
+    f"К-сть поколінь: {N_GENERATION}, \n Штраф: {PENALTY}, \n Ліміт зупинки {NO_IMPROVE_LIMIT}, \n Модель: {DEFAULT_MODEL}"
+)
 
 
 def genetic_algorithm(
@@ -28,13 +38,14 @@ def genetic_algorithm(
     mutation_rate: float = 0.05,
     tournament_k: int = 3,
     # PENALTY: float = 0.01,
-    cv: int = 2,
+    cv: int = 5,
     scoring: str = "roc_auc",
     verbose: bool = True,
 ):
 
     if model is None:
         model = DEFAULT_MODEL
+    no_improve_count = 0
 
     X_np = X_train.values if hasattr(X_train, "values") else np.array(X_train)
     y_np = y_train.values if hasattr(y_train, "values") else np.array(y_train)
@@ -47,18 +58,39 @@ def genetic_algorithm(
     history = []
 
     for gen in range(N_GENERATION):
-        fitness_scores = np.array(
-            [
-                fitness_function(ch, X_np, y_np, model, PENALTY, cv, scoring)
-                for ch in population
-            ]
-        )
+        # не паралельно
+        # fitness_scores = np.array(
+        #     [
+        #         fitness_function(ch, X_np, y_np, model, PENALTY, cv, scoring)
+        #         for ch in population
+        #     ]
+        # )
 
+        # паралельно (швидше)
+        fitness_scores = np.array(
+            Parallel(n_jobs=-1)(
+                delayed(fitness_function)(
+                    ch, X_np, y_np, copy.deepcopy(DEFAULT_MODEL), PENALTY, cv, scoring
+                )
+                for ch in population
+            )
+        )
         gen_best_idx = np.argmax(fitness_scores)
 
         if fitness_scores[gen_best_idx] > best_fitness:
             best_fitness = fitness_scores[gen_best_idx]
             best_chromosome = population[gen_best_idx].copy()
+
+        if fitness_scores[gen_best_idx] > best_fitness:
+            best_fitness = fitness_scores[gen_best_idx]
+            best_chromosome = population[gen_best_idx].copy()
+            no_improve_count = 0
+        else:
+            no_improve_count += 1
+
+        if no_improve_count >= NO_IMPROVE_LIMIT:
+            print(f"Рання зупинка на генерації {gen+1}")
+            break
         n_selected = int(best_chromosome.sum())
         if (gen + 1) % 2 == 0:
             color = "\033[31m"
