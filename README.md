@@ -1,57 +1,86 @@
-DATA
-→ load dataset (CSV using pandas)
-→ initial data inspection
-→ check missing values and duplicates
-→ analyze target distribution (class balance)
-→ identify feature types (numerical / categorical / binary)
+# Genetic Algorithm for Feature Selection
 
-PREPROCESSING
-→ split into X (features) and y (target)
-→ one-hot encoding for categorical features
-→ handle missing values (if any)
-→ feature scaling (StandardScaler for numerical features)
-→ train/test split with stratification (preserve class balance)
-→ prepare final feature matrix for modeling
+A Python implementation of a Genetic Algorithm (GA) for automated feature selection in binary classification tasks.
 
-BASELINE ML
-→ choose baseline model
-→ train model on all features (X_train)
-→ make predictions on X_test
-→ compute evaluation metrics
-→ store results as baseline reference
+## Authors
+First-year Computer Science students, Applied Sciences Faculty, Ukrainian Catholic University (UCU)
 
-GA (ML inside fitness)
-→ encode solution as binary chromosome (1 = select feature, 0 = ignore)
-→ initialize random population of feature subsets
-→ fitness evaluation for each chromosome:
- → select subset of features from X_train
- → train ML model on selected features
- → evaluate using cross-validation
- → apply penalty for number of features
-→ selection (choose best-performing individuals)
-→ crossover (combine parent chromosomes)
-→ mutation (random bit flips for diversity)
-→ repeat over multiple generations
-→ obtain best chromosome (optimal feature subset)
+- **Zabulskyi Mykola**
+- **Pelyno Mykhailo**
+- **Yatsko Alina**
+- **Havronska Sofia**
 
-BEST FEATURES
-→ decode best chromosome into selected feature list
-→ interpret most important features
-→ reduce dimensionality of dataset
-→ create X_train_selected and X_test_selected
+## Overview
+This project applies a Genetic Algorithm to select the most relevant features from a dataset, reducing dimensionality while maintaining or improving model performance. The algorithm evolves a population of binary chromosomes, where each bit represents whether a feature is included or excluded.
 
-FINAL ML
-→ train same ML model on selected features
-→ make predictions on test set
-→ compute final evaluation metrics
+## How It Works
+1. **Initialization** — random population of binary chromosomes is generated
+2. **Fitness Evaluation** — each chromosome is scored using cross-validated ROC-AUC with a penalty for using too many features
+3. **Selection** — tournament selection picks the best candidates
+4. **Crossover** — single-point crossover produces new children
+5. **Mutation** — random bit flips introduce diversity
+6. **Elitism** — best chromosome is always preserved to the next generation
+7. **Early Stopping** — halts if no improvement is found for N generations
 
-EVALUATION
-→ evaluate final model performance (Accuracy, F1-score, AUC)
-→ check generalization (train vs test performance gap)
-→ assess stability of results
+## Project Structure
+```
+├── main.py                  # Genetic algorithm loop and entry point
+├── models.py                # Model definition and fitness function
+├── genetic_algorithm.py     # GA operators: init, selection, crossover, mutation
+├── data.py                  # Dataset loading, preprocessing, train/test split
+└── datasets/                # CSV datasets
+```
 
-COMPARISON
-→ compare baseline ML vs GA-optimized ML
-→ analyze performance difference (AUC/F1)
-→ analyze feature reduction impact
-→ draw conclusion on effectiveness of GA-based feature selection
+## Requirements
+numpy
+pandas
+scikit-learn
+joblib
+How to install?
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+1. Set your dataset path and parameters in `data.py`:
+```python
+FILENAME = 'datasets/your_dataset.csv'
+SAMPLE_SIZE = 10000  # or None for full dataset
+```
+2. Tune the algorithm parameters in `main.py`:
+```python
+N_GENERATION = 100
+PENALTY = 0.01
+```
+3. Run:
+```bash
+python main.py
+```
+
+## Parameters
+
+| Parameter | Default | Description |
+|---|---|---|
+| `N_GENERATION` | 100 | Number of generations |
+| `PENALTY` | 0.01 | Penalty for using too many features |
+| `population_size` | 30 | Number of chromosomes per generation |
+| `crossover_rate` | 0.8 | Probability of crossover |
+| `mutation_rate` | 0.05 | Probability of bit flip |
+| `tournament_k` | 3 | Tournament selection size |
+| `cv` | 5 | Cross-validation folds |
+| `scoring` | roc_auc | Fitness scoring metric |
+
+## Requirements for Dataset
+- CSV format
+- Target variable must be the **last column**
+- Target must be binary: `0` and `1`
+- Any categorical columns are automatically encoded
+
+## Example Results
+Features: 78 → 29
+Baseline (all features):
+Accuracy: 0.927 | F1: 0.941 | ROC-AUC: 0.965
+GA Model (29 features):
+Accuracy: 0.916 | F1: 0.932 | ROC-AUC: 0.965
+> 78 features reduced to 29 with no loss in ROC-AUC
