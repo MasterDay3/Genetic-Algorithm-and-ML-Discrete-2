@@ -21,11 +21,13 @@ This project applies a Genetic Algorithm to select the most relevant features fr
 7. **Early Stopping** — halts if no improvement is found for N generations
 
 ## Project Structure
+```
 ├── main.py                  # Genetic algorithm loop and entry point
 ├── models.py                # Model definition and fitness function
 ├── genetic_algorithm.py     # GA operators: init, selection, crossover, mutation
 ├── data.py                  # Dataset loading, preprocessing, train/test split
 └── datasets/                # CSV datasets
+```
 
 ## Requirements
 numpy
