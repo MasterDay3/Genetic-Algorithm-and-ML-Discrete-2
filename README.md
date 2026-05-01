@@ -3,9 +3,9 @@
 A Python implementation of a Genetic Algorithm (GA) for automated feature selection in binary classification tasks.
 
 ## Authors
-**Mykola Zabulskyi**
-**Pelyno Mykhailo**
-**Yatsko Alina**
+**Mykola Zabulskyi &**
+**Pelyno Mykhailo &**
+**Yatsko Alina &**
 **Havronska Sophia**
 
 ## Overview
