@@ -5,10 +5,24 @@ A Python implementation of a Genetic Algorithm (GA) for automated feature select
 ## Authors
 First-year Computer Science students, Applied Sciences Faculty, Ukrainian Catholic University (UCU)
 
-- **Zabulskyi Mykola**
-- **Pelyno Mykhailo**
-- **Yatsko Alina**
-- **Havronska Sofia**
+### Zabulskyi Mykola
+- GitHub: https://github.com/MasterDay3
+
+### Pelyno Mykhailo
+- GitHub: https://github.com/pmykhailyk-dot
+
+### Yatsko Alina
+- GitHub: https://github.com/alinaytsk
+
+### Havronska Sofia
+- GitHub: https://github.com/havronskasoph
+
+---
+
+## Mentor
+
+### Andriy Kryvyi
+- GitHub: https://github.com/draklowell
 
 ## Overview
 This project applies a Genetic Algorithm to select the most relevant features from a dataset, reducing dimensionality while maintaining or improving model performance. The algorithm evolves a population of binary chromosomes, where each bit represents whether a feature is included or excluded.
