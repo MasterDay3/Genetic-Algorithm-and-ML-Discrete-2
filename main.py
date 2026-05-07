@@ -220,7 +220,7 @@ if __name__ == "__main__":
     print("=" * 50)
     print(f"Features: {len(X_train.columns)} → {len(selected_features)}")
     print(f"Selected: {selected_features}")
-    print(f"\nBaseline (all features):")
+    print(f"\START (all features):")
     print(f"  Accuracy: {acc_base:.3f} | F1: {f1_base:.3f} | ROC-AUC: {auc_base:.3f}")
     print(f"\nGA Model ({len(selected_features)} features):")
     print(f"  Accuracy: {acc:.3f} | F1: {f1:.3f} | ROC-AUC: {auc:.3f}")
