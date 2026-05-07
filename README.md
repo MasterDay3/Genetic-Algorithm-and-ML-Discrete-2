@@ -5,24 +5,20 @@ A Python implementation of a Genetic Algorithm (GA) for automated feature select
 ## Authors
 First-year Computer Science students, Applied Sciences Faculty, Ukrainian Catholic University (UCU)
 
-### Zabulskyi Mykola
-- GitHub: https://github.com/MasterDay3
-
-### Pelyno Mykhailo
-- GitHub: https://github.com/pmykhailyk-dot
-
-### Yatsko Alina
-- GitHub: https://github.com/alinaytsk
-
-### Havronska Sofia
-- GitHub: https://github.com/havronskasoph
+| Member | GitHub |
+|--------|--------|
+| <img src="https://github.com/MasterDay3.png?size=80" width="50" style="border-radius:50%"> **[Zabulskyi Mykola](https://github.com/MasterDay3)** | @MasterDay3 |
+| <img src="https://github.com/pmykhailyk-dot.png?size=80" width="50" style="border-radius:50%"> **[Pelyno Mykhailo](https://github.com/pmykhailyk-dot)** | @pmykhailyk-dot |
+| <img src="https://github.com/alinaytsk.png?size=80" width="50" style="border-radius:50%"> **[Yatsko Alina](https://github.com/alinaytsk)** | @alinaytsk |
+| <img src="https://github.com/havronskasoph.png?size=80" width="50" style="border-radius:50%"> **[Havronska Sofia](https://github.com/havronskasoph)** | @havronskasoph |
 
 ---
 
 ## Mentor
 
-### Andriy Kryvyi
-- GitHub: https://github.com/draklowell
+| Mentor | GitHub |
+|--------|--------|
+| <img src="https://github.com/draklowell.png?size=80" width="50" style="border-radius:50%"> **[Andriy Kryvyi](https://github.com/draklowell)** | @draklowell |
 
 ## Overview
 This project applies a Genetic Algorithm to select the most relevant features from a dataset, reducing dimensionality while maintaining or improving model performance. The algorithm evolves a population of binary chromosomes, where each bit represents whether a feature is included or excluded.
