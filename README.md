@@ -51,6 +51,8 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
     </td>
   </tr>
 </table>
+
+
 ## Overview
 This project applies a Genetic Algorithm to select the most relevant features from a dataset, reducing dimensionality while maintaining or improving model performance. The algorithm evolves a population of binary chromosomes, where each bit represents whether a feature is included or excluded.
 
