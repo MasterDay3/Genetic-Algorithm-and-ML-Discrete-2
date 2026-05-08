@@ -52,6 +52,7 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
   </tr>
 </table>
 
+---
 
 ## Overview
 This project applies a Genetic Algorithm to select the most relevant features from a dataset, reducing dimensionality while maintaining or improving model performance. The algorithm evolves a population of binary chromosomes, where each bit represents whether a feature is included or excluded.
@@ -71,34 +72,45 @@ This project applies a Genetic Algorithm to select the most relevant features fr
 ├── models.py                # Model definition and fitness function
 ├── genetic_algorithm.py     # GA operators: init, selection, crossover, mutation
 ├── data.py                  # Dataset loading, preprocessing, train/test split
+├── visualization.py         # Plotting GA results
+├── test.py                  # Runtime estimation utility
 └── datasets/                # CSV datasets
 ```
 
 ## Requirements
+```
 numpy
 pandas
 scikit-learn
 joblib
-How to install?
+matplotlib
+```
+
 Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
-1. Set your dataset path and parameters in `data.py`:
+1. Set your dataset path in `data.py`:
 ```python
 FILENAME = 'datasets/your_dataset.csv'
-SAMPLE_SIZE = 10000  # or None for full dataset
 ```
+
 2. Tune the algorithm parameters in `main.py`:
 ```python
 N_GENERATION = 100
 PENALTY = 0.01
 ```
+
 3. Run:
 ```bash
 python main.py
+```
+
+Or use CLI arguments:
+```bash
+python main.py --generations 50 --penalty 0.05 --population-size 30 --model logistic --scoring roc_auc
 ```
 
 ## Parameters
@@ -111,7 +123,7 @@ python main.py
 | `crossover_rate` | 0.8 | Probability of crossover |
 | `mutation_rate` | 0.05 | Probability of bit flip |
 | `tournament_k` | 3 | Tournament selection size |
-| `cv` | 5 | Cross-validation folds |
+| `cv` | 3 | Cross-validation folds |
 | `scoring` | roc_auc | Fitness scoring metric |
 
 ## Requirements for Dataset
@@ -121,9 +133,13 @@ python main.py
 - Any categorical columns are automatically encoded
 
 ## Example Results
+```
 Features: 78 → 29
+
 Baseline (all features):
-Accuracy: 0.927 | F1: 0.941 | ROC-AUC: 0.965
+  Accuracy: 0.927 | F1: 0.941 | ROC-AUC: 0.965
+
 GA Model (29 features):
-Accuracy: 0.916 | F1: 0.932 | ROC-AUC: 0.965
+  Accuracy: 0.916 | F1: 0.932 | ROC-AUC: 0.965
+```
 > 78 features reduced to 29 with no loss in ROC-AUC
