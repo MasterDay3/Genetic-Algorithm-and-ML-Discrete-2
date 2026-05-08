@@ -1,3 +1,5 @@
+"""ML part of project"""
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.model_selection import cross_val_score
@@ -14,6 +16,7 @@ DEFAULT_MODEL = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000
 
 
 def evaluate_baseline(model, X_tr, y_tr, X_te, y_te):
+    """Evaluate acc, f1 and auc-roc for dataset with all features"""
     model.fit(X_tr, y_tr)
     y_pred = model.predict(X_te)
     y_prob = model.predict_proba(X_te)[:, 1]
@@ -37,6 +40,8 @@ def fitness_function(
     cv: int = 5,
     scoring: str = DEFAULT_SCORING,
 ) -> float:
+    """Function that calculates model accuracy while applying
+    a penalty for selecting too many features."""
     selected_indices = np.where(chromosome == 1)[0]
 
     if len(selected_indices) == 0:

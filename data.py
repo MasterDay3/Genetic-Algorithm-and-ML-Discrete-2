@@ -3,8 +3,8 @@ dataset preparing and unpacking
 """
 
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
 # FILENAME = "datasets/heart.csv"
@@ -19,6 +19,7 @@ df = df.drop_duplicates()
 
 
 def convert_to_numeric(df):
+    """Allows to work with dataset, converts all features into digits"""
     df = df.copy()
     encoders = {}
 

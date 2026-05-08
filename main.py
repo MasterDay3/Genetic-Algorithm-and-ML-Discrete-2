@@ -2,8 +2,8 @@
 
 import argparse
 import warnings
-from joblib import Parallel, delayed
 import copy
+from joblib import Parallel, delayed
 import numpy as np
 from data import X_train, X_test, y_train, y_test, FILENAME
 from models import evaluate_baseline, fitness_function, DEFAULT_MODEL
@@ -18,6 +18,21 @@ warnings.filterwarnings("ignore")
 
 
 def parse_args():
+    """Parse command-line arguments for the genetic algorithm configuration.
+
+    Returns:
+
+        argparse.Namespace:
+            Parsed command-line arguments containing:
+            - dataset (str): Path to the CSV dataset.
+            - generations (int): Number of generations.
+            - penalty (float): Penalty coefficient for using too many features.
+            - population_size (int): Number of chromosomes in each generation.
+            - mutation_rate (float): Probability of mutation during evolution.
+            - model (str): Classifier type ('logistic' or 'random-forest').
+            - scoring (str): Fitness evaluation metric.
+
+    """
     parser = argparse.ArgumentParser(
         description="Genetic Algorithm for Feature Selection"
     )
@@ -91,6 +106,68 @@ def genetic_algorithm(
     scoring: str = "roc_auc",
     verbose: bool = True,
 ):
+    """
+    Run a genetic algorithm for feature selection.
+    The algorithm evolves a population of chromosomes where each chromosome
+    represents a subset of selected features. Fitness is evaluated using
+    cross-validation and a chosen scoring metric.
+    Args:
+        X_train (pd.DataFrame or np.ndarray):
+            Training feature matrix.
+        y_train (pd.Series or np.ndarray):
+            Target labels.
+        feature_names (list[str]):
+            List of feature names corresponding to columns in X_train.
+        population_size (int, optional):
+            Number of chromosomes in each generation.
+            Larger values increase search diversity but require more computation.
+            Recommended range: 15–100.
+            Default is 15.
+        crossover_rate (float, optional):
+            Probability of crossover between parent chromosomes.
+            Higher values encourage exploration of new feature combinations.
+            Recommended range: 0.7–0.9.
+            Default is 0.8.
+        mutation_rate (float, optional):
+            Probability of random mutation (bit flip).
+            Small values help maintain stability while avoiding local minima.
+            Recommended range: 0.01–0.1.
+            Default is 0.05.
+        tournament_k (int, optional):
+            Number of individuals participating in tournament selection.
+            Higher values increase selection pressure.
+            Recommended range: 2–5.
+            Default is 3.
+        cv (int, optional):
+            Number of cross-validation folds used during fitness evaluation.
+            Higher values provide more reliable estimates but increase runtime.
+            Recommended range: 3–10.
+            Default is 3.
+        scoring (str, optional):
+            Metric used for fitness evaluation.
+            Supported values:
+            - "roc_auc"
+            - "accuracy"
+            - "f1"
+            Default is "roc_auc".
+        verbose (bool, optional):
+            If True, prints progress and intermediate results during execution.
+            Default is True.
+    Notes:
+
+        All major hyperparameters can be tuned depending on dataset size,
+        computational resources, and optimization goals.
+        General recommendations:
+        - Increase population_size for larger or more complex datasets.
+        - Increase mutation_rate if the algorithm converges too early.
+        - Reduce mutation_rate if solutions become unstable.
+        - Use higher cv values for more reliable fitness estimation.
+        - Use "roc_auc" for imbalanced classification problems.
+    Returns:
+        dict:
+            Dictionary containing the best chromosome, selected features,
+            fitness history, and evaluation metrics.
+    """
 
     no_improve_count = 0
 
