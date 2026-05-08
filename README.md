@@ -47,7 +47,7 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
       <img src="https://github.com/draklowell.png" width="120" style="border-radius:50%"><br>
       <a href="https://github.com/draklowell"><b>@draklowell</b></a><br>
       <b>Andriy Kryvyi</b><br>
-      ...
+      Legend
     </td>
   </tr>
 </table>
