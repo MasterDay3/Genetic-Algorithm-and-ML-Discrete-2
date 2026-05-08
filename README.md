@@ -12,7 +12,6 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
       <a href="https://github.com/MasterDay3"><b>@MasterDay3</b></a><br>
       <b>Zabulskyi Mykola</b><br>
        data preparation and dataset management, testing and validation of project components, result visualization, and implementation of argument parsing for convenient project configuration and execution.
-
     </td>
     <td align="center">
       <img src="https://github.com/pmykhailyk-dot.png" width="120" style="border-radius:50%"><br>
