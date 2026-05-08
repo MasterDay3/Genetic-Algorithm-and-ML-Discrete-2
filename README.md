@@ -11,13 +11,14 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
       <img src="https://github.com/MasterDay3.png" width="120" style="border-radius:50%"><br>
       <a href="https://github.com/MasterDay3"><b>@MasterDay3</b></a><br>
       <b>Zabulskyi Mykola</b><br>
-      ...
+       data preparation and dataset management, testing and validation of project components, result visualization, and implementation of argument parsing for convenient project configuration and execution.
+
     </td>
     <td align="center">
       <img src="https://github.com/pmykhailyk-dot.png" width="120" style="border-radius:50%"><br>
       <a href="https://github.com/pmykhailyk-dot"><b>@pmykhailyk-dot</b></a><br>
       <b>Pelyno Mykhailo</b><br>
-      ...
+      implementation of the machine learning part and the fitness function, including model integration, result evaluation, and connection of the ML pipeline with the optimization process.
     </td>
   </tr>
 
@@ -26,13 +27,13 @@ First-year Computer Science students, Applied Sciences Faculty, Ukrainian Cathol
       <img src="https://github.com/alinaytsk.png" width="120" style="border-radius:50%"><br>
       <a href="https://github.com/alinaytsk"><b>@alinaytsk</b></a><br>
       <b>Yatsko Alina</b><br>
-      ...
+      implementation of the genetic algorithm, including population evolution logic, selection, mutation, crossover mechanisms, and overall algorithm optimization.
     </td>
     <td align="center">
       <img src="https://github.com/havronskasoph.png" width="120" style="border-radius:50%"><br>
       <a href="https://github.com/havronskasoph"><b>@havronskasoph</b></a><br>
       <b>Havronska Sofia</b><br>
-      ...
+      implementation of the main program function, coordination of all project modules, and ensuring proper interaction between system components. Helped structure the overall workflow and maintain project consistency.
     </td>
   </tr>
 </table>
