@@ -7,16 +7,17 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-# FILENAME = "datasets/heart.csv"
+#FILENAME = "datasets/heart.csv"
 # FILENAME = "datasets/diabetes.csv"
 # FILENAME = "datasets/hospital_readmission.csv"
-FILENAME = "datasets/working_hours.csv"
+# FILENAME = "datasets/working_hours.csv"
+#FILENAME = 'datasets/student_model_ready.csv'
 
 
 print(f"Loading dataset {FILENAME}")
 df = pd.read_csv(FILENAME)
 df = df.drop_duplicates()
-df = df.sample(10000)
+# df = df.sample(10000)
 
 
 def convert_to_numeric(df):
@@ -41,7 +42,9 @@ def convert_to_numeric(df):
     df = df.fillna(df.median(numeric_only=True))
 
     return df
-
+if FILENAME == 'datasets/student_model_ready.csv':
+    df = df.drop(columns=["G1", "G2", 'failures', 'higher', 'school'])
+    df["G3"] = (df["G3"] >= 10).astype(int)
 
 print(df.columns)
 # if FILENAME == "datasets/working_hours.csv":

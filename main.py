@@ -45,13 +45,13 @@ def parse_args():
     parser.add_argument(
         "--generations",
         type=int,
-        default=150,
+        default=100,
         help="Number of generations (default: 100)",
     )
     parser.add_argument(
         "--penalty",
         type=float,
-        default=0.01,
+        default=0.05,
         help="Penalty for using too many features (default: 0.05)",
     )
     parser.add_argument(
@@ -63,7 +63,7 @@ def parse_args():
     parser.add_argument(
         "--mutation-rate",
         type=float,
-        default=0.03,
+        default=0.02,
         help="Probability of bit flip during mutation (default: 0.02)",
     )
     parser.add_argument(
